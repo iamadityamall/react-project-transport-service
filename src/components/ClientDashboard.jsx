@@ -1,6 +1,6 @@
 import React from "react";
 import SingleClientForm from "./SingleClientForm";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Alert from "./Alert";
 import { useGlobalContext } from "../context";
 

@@ -32,9 +32,12 @@ const AppProvider = ({ children }) => {
     console.log("submited");
     if (!person.username && !person.password) {
       showAlert(true, "empty field", "danger");
-    } else if (person.username === person.password) {
-      setAlert(true, 'successfully logged in', 'success')
-      navigate("/dashboard");
+    } else if (person.username === "client" && person.username === "client") {
+      setAlert(true, "successfully logged in", "success");
+      navigate("/client");
+    } else if (person.username === "transporter" && person.username === "transporter") {
+      setAlert(true, "successfully logged in", "success");
+      navigate("/transporter");
     } else {
       showAlert(true, "incorrect password or username", "danger");
     }
