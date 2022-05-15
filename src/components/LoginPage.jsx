@@ -1,9 +1,14 @@
 import Alert from "./Alert";
 import { useGlobalContext } from "../context";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const { handleSubmit, handleChange, person, showAlert, alert } =
     useGlobalContext();
+
+    useEffect(() => {
+      document.title = "login page";
+    },[]);
 
   return (
     <main className="h-screen flex justify-center items-center">

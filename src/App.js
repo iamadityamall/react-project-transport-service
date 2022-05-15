@@ -6,6 +6,7 @@ import Error from "./components/Error";
 import TransporterDashBoard from "./components/TransporterDashBoard";
 
 const App = () => {
+  
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />

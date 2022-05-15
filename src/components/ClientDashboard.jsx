@@ -3,6 +3,7 @@ import SingleClientForm from "./SingleClientForm";
 import { useState } from "react";
 import Alert from "./Alert";
 import { useGlobalContext } from "../context";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const [clientOne, setClientOne] = useState(false);
@@ -14,9 +15,14 @@ const Dashboard = () => {
     type: "",
     weight: "",
   });
+
+  useEffect(() => {
+    document.title = `welcome ${person.username}`
+  })
+
   const [file, setFile] = useState();
 
-  const { alert, showAlert } = useGlobalContext();
+  const { alert, showAlert, person } = useGlobalContext();
 
   const handleChange = (e) => {
     let name = e.target.name;

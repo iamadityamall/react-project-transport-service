@@ -1,5 +1,7 @@
 import React from "react";
 import SingleTransporterForm from "./SingleTransporterForm";
+import { useEffect } from "react";
+import { useGlobalContext } from "../context";
 
 const Dashboard = () => {
   const details = [
@@ -11,6 +13,7 @@ const Dashboard = () => {
       type: "",
       weight: "",
     },
+
     // {
     //   clientID: 1,
     //   clientName: "Harsh Mall",
@@ -44,6 +47,11 @@ const Dashboard = () => {
     //   weight: "1000kg",
     // },
   ];
+  const { person } = useGlobalContext();
+
+  useEffect(() => {
+    document.title = `weclome ${person.username}`;
+  }, [person.username]);
 
   return (
     <section className="flex justify-center h-screen">
