@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import Alert from "./Alert";
 import { useGlobalContext } from "../context";
 
 const LoginPage = () => {
-  const {handleSubmit, handleChange, person, showAlert, alert} = useGlobalContext();
+  const { handleSubmit, handleChange, person, showAlert, alert } =
+    useGlobalContext();
 
   return (
     <main className="h-screen flex justify-center items-center">
