@@ -35,7 +35,7 @@ const Dashboard = () => {
       <form className="p-4 flex flex-col space-y-8 w-[80vw] md:w-[90vw] xl:w-[60vw] mt-20">
         <article className="flex flex-col space-y-5">
           <h1 className="font-mono font-bold">
-            Client List: {clients.length <= 0 && "list is empty no new consignment."}
+            Client List: {clients.length <= 0 && "list is empty no. new consignment."}
           </h1>
           {clients.map((item) => {
             return (
