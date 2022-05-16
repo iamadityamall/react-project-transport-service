@@ -3,9 +3,9 @@ import { db } from "../components/firebase-config";
 import {
   collection,
   getDocs,
-  getDoc,
+//   getDoc,
   addDoc,
-  updateDoc,
+//   updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";

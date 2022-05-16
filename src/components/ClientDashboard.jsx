@@ -21,7 +21,7 @@ const Dashboard = () => {
     document.title = `welcome ${person.username}`;
   });
 
-  const [file, setFile] = useState();
+  // const [file, setFile] = useState(null);
 
   const { alert, showAlert, person } = useGlobalContext();
 
@@ -32,11 +32,11 @@ const Dashboard = () => {
     setDetails(newDetail);
   };
 
-  const handleFile = (e) => {
-    let file = e.target.files;
-    console.log(file);
-    setFile(file);
-  };
+  // const handleFile = (e) => {
+  //   let file = e.target.files;
+  //   console.log(file);
+  //   setFile(file);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,7 +102,7 @@ const Dashboard = () => {
             <SingleClientForm
               handleChange={handleChange}
               details={details}
-              handleFile={handleFile}
+              // handleFile={handleFile}
             />
           )}
         </article>
@@ -139,7 +139,7 @@ const Dashboard = () => {
             <SingleClientForm
               handleChange={handleChange}
               details={details}
-              handleFile={handleFile}
+              // handleFile={handleFile}
             />
           )}
           <div>{alert && <Alert />}</div>
