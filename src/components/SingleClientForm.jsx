@@ -10,8 +10,8 @@ const SingleClientForm = ({ handleChange, details, handleFile }) => {
             id="name"
             type="text"
             placeholder=" full name"
-            name="name"
-            value={details.name}
+            name="clientName"
+            value={details.clientName}
             onChange={(e) => handleChange(e)}
           />
         </div>

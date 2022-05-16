@@ -4,21 +4,22 @@ import { useState } from "react";
 import Alert from "./Alert";
 import { useGlobalContext } from "../context";
 import { useEffect } from "react";
+import ClientDataService from "../services/client.services";
 
 const Dashboard = () => {
   const [clientOne, setClientOne] = useState(false);
   const [clientTwo, setClientTwo] = useState(false);
   const [details, setDetails] = useState({
+    transporterName: "",
     clientName: "",
-    name: "",
     quantity: "",
     type: "",
     weight: "",
   });
 
   useEffect(() => {
-    document.title = `welcome ${person.username}`
-  })
+    document.title = `welcome ${person.username}`;
+  });
 
   const [file, setFile] = useState();
 
@@ -27,7 +28,7 @@ const Dashboard = () => {
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    let newDetail = { ...details, [name]: value, file };
+    let newDetail = { ...details, [name]: value };
     setDetails(newDetail);
   };
 
@@ -37,20 +38,32 @@ const Dashboard = () => {
     setFile(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(details);
+    const newClient = details;
+
+    try {
+      await ClientDataService.addClient(newClient);
+    } catch (error) {
+      console.log(error);
+    }
+
     setDetails({
       ...details,
+      transporterName: "",
       clientName: "",
-      name: "",
       quantity: "",
       type: "",
       weight: "",
     });
     setClientOne(false);
     setClientTwo(false);
-    showAlert(true, `submitted successfully : ${details.clientName}`, "success");
+    showAlert(
+      true,
+      `submitted successfully : ${details.clientName}`,
+      "success"
+    );
   };
 
   return (
@@ -61,8 +74,8 @@ const Dashboard = () => {
           <div className="flex justify-between p-4 capitalize items-center mb-5">
             <h1 className="font-bold text-sm font-mono">transporter 1</h1>
             <button
-              name="clientName"
-              value="client-1"
+              name="transporterName"
+              value="transporter-1"
               className={`${
                 clientOne ? "bg-green-400 text-white" : "bg-gray-300"
               } px-3 py-1 rounded-md text-sm`}
@@ -72,8 +85,8 @@ const Dashboard = () => {
                 setClientOne(!clientOne);
                 setDetails({
                   ...details,
+                  transporterName: e.target.value,
                   clientName: "",
-                  name: "",
                   quantity: "",
                   type: "",
                   weight: "",
@@ -99,8 +112,8 @@ const Dashboard = () => {
           <div className="flex justify-between p-4 capitalize items-center mb-5">
             <h1 className="font-bold text-sm font-mono">transporter 2</h1>
             <button
-              name="clientName"
-              value="client-2"
+              name="transporterName"
+              value="transporter-2"
               className={`${
                 clientTwo ? "bg-green-400 text-white" : "bg-gray-300"
               } px-3 py-1 rounded-md text-sm`}
@@ -110,8 +123,8 @@ const Dashboard = () => {
                 setClientTwo(!clientTwo);
                 setDetails({
                   ...details,
+                  transporterName: e.target.value,
                   clientName: "",
-                  name: "",
                   quantity: "",
                   type: "",
                   weight: "",

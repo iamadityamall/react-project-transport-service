@@ -1,6 +1,13 @@
 import React from "react";
 
-const SingleClientForm = ({ name, quantity, type, weight }) => {
+const SingleClientForm = ({
+  id,
+  clientName,
+  quantity,
+  type,
+  weight,
+  deleteHandler,
+}) => {
   return (
     <section className="flex flex-col space-y-5 capitalize font-mono font-bold p-4 bg-gray-100 rounded-lg">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -11,7 +18,8 @@ const SingleClientForm = ({ name, quantity, type, weight }) => {
             type="text"
             placeholder=" full name"
             name="name"
-            value={name}
+            value={clientName}
+            readOnly
           />
         </div>
         <button
@@ -34,6 +42,7 @@ const SingleClientForm = ({ name, quantity, type, weight }) => {
             name="quantity"
             value={quantity}
             className="p-1"
+            readOnly
           />
         </div>
         <div className="flex flex-col space-y-2 md:space-y-2">
@@ -45,6 +54,7 @@ const SingleClientForm = ({ name, quantity, type, weight }) => {
             name="type"
             value={type}
             className="p-1"
+            readOnly
           />
         </div>
         <div className="flex flex-col space-y-2 md:space-y-2">
@@ -56,12 +66,27 @@ const SingleClientForm = ({ name, quantity, type, weight }) => {
             name="weight"
             value={weight}
             className="p-1"
+            readOnly
           />
         </div>
       </div>
       <div className="flex space-x-5">
-        <button className="bg-green-300 p-4 rounded-lg">accept</button>
-        <button className="bg-red-300 p-4 rounded-lg">decline</button>
+        <button
+          type="button"
+          className="bg-green-300 p-4 rounded-lg"
+          onClick={() =>
+            alert("feature not yet added. this is at proof of concept stage.")
+          }
+        >
+          accept
+        </button>
+        <button
+          type="button"
+          className="bg-red-300 p-4 rounded-lg"
+          onClick={() => deleteHandler(id)}
+        >
+          decline
+        </button>
       </div>
     </section>
   );
