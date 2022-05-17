@@ -5,6 +5,9 @@ import Alert from "./Alert";
 import { useGlobalContext } from "../context";
 import { useEffect } from "react";
 import ClientDataService from "../services/client.services";
+import { storage } from "../components/firebase-config";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
 const Dashboard = () => {
   const [clientOne, setClientOne] = useState(false);
@@ -16,32 +19,91 @@ const Dashboard = () => {
     type: "",
     weight: "",
   });
-
+  const [newClient, setNewClient] = useState({});
+  const [file, setFile] = useState(null);
   useEffect(() => {
     document.title = `welcome ${person.username}`;
   });
 
-  // const [file, setFile] = useState(null);
+  const [newUrl, setNewUrl] = useState();
 
   const { alert, showAlert, person } = useGlobalContext();
 
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    let newDetail = { ...details, [name]: value };
+    let newDetail = { ...details, [name]: value, url: newUrl };
     setDetails(newDetail);
   };
 
-  // const handleFile = (e) => {
-  //   let file = e.target.files;
-  //   console.log(file);
-  //   setFile(file);
-  // };
+  const fileChange = (e) => {
+    setFile(e.target.files[0]);
+    console.log(file);
+  };
+
+  const uploadDoc = (e) => {
+    // firebase storage and url
+    e.preventDefault();
+
+    const storageRef = ref(storage, `images/${v4() + file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        try {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setNewUrl(url);
+            console.log(details);
+            console.log(url);
+            console.log(typeof url);
+            return console.log(url);
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(details);
-    const newClient = details;
+    console.log(newUrl);
+
+    setNewClient({
+      ...details,
+      url: newUrl,
+    });
 
     try {
       await ClientDataService.addClient(newClient);
@@ -102,7 +164,8 @@ const Dashboard = () => {
             <SingleClientForm
               handleChange={handleChange}
               details={details}
-              // handleFile={handleFile}
+              fileChange={fileChange}
+              uploadDoc={uploadDoc}
             />
           )}
         </article>
@@ -139,7 +202,8 @@ const Dashboard = () => {
             <SingleClientForm
               handleChange={handleChange}
               details={details}
-              // handleFile={handleFile}
+              fileChange={fileChange}
+              uploadDoc={uploadDoc}
             />
           )}
           <div>{alert && <Alert />}</div>
@@ -154,6 +218,7 @@ const Dashboard = () => {
           submit
         </button>
       </form>
+      <p>{newUrl}</p>
     </section>
   );
 };

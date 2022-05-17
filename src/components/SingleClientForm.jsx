@@ -1,6 +1,6 @@
 import React from "react";
 
-const SingleClientForm = ({ handleChange, details, handleFile }) => {
+const SingleClientForm = ({ handleChange, details, fileChange, uploadDoc }) => {
   return (
     <section className="flex flex-col space-y-5 capitalize font-mono font-bold p-4 bg-gray-100 rounded-lg md:p-10 md:space-y-10">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -18,9 +18,9 @@ const SingleClientForm = ({ handleChange, details, handleFile }) => {
         <input
           type="file"
           className="text-sm mt-5 md:mt-0"
-          name="fileName"
-          onChange={(e) => handleFile(e)}
+          onChange={(e) => fileChange(e)}
         />
+        <button type="submit" onClick={(e)=>uploadDoc(e)}>upload</button>
       </div>
       <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-5 md:justify-between">
         <div className="flex flex-col space-y-2 md:space-y-2">

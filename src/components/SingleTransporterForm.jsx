@@ -6,6 +6,7 @@ const SingleClientForm = ({
   quantity,
   type,
   weight,
+  url,
   deleteHandler,
 }) => {
   return (
@@ -27,9 +28,11 @@ const SingleClientForm = ({
           className="text-sm mt-5 md:mt-0 bg-gray-700 text-white p-2 rounded-lg"
           name="fileName"
           value="download"
-          onClick={() => alert("attachment downloaded")}
+          onClick={() => console.log(url)}
         >
-          download attachment
+          <a href={url} target="_blank" rel="noreferrer">
+            download attachment
+          </a>
         </button>
       </div>
       <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-5 md:justify-between">
